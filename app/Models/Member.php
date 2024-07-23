@@ -12,7 +12,7 @@ class Member extends Model
     'email',
     'first_name',
     'last_name',
-    'image',
+    'iamage',
     'position',
     'sallery',
     'gender',
