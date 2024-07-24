@@ -5,13 +5,18 @@
         .delete-button{
             margin-left: 10px;
         }
+        .table-actions{
+            display: flex;
+        }
     </style>
  @endsection
 @section('content')
     <div class="container">
+        @if(Auth::user()->role != 'writer')
         <div class="button-content">
             <a class="btn btn-sm btn btn-primary" href="{{route('member_create')}}">Add Member</a>
         </div>
+        @endif
         <table id="members_list_table">
             <thead>
                 <tr>
@@ -24,7 +29,9 @@
                     <th>Job Title</th>
                     <th>Salery</th>
                     <th>Joined At</th>
+                    @if(Auth::user()->role != 'writer')
                     <th>Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -39,10 +46,24 @@
                     <td>{{$member->position}}</td>
                     <td>{{$member->sallery}}</td>
                     <td>{{ Carbon\Carbon::parse($member->joined_at)->format('d-m-Y') }}</td>
-                    <td>
+
+                    @if (Auth::user()->role != 'writer')
+
+                    <td class="table-actions">
                         <a class="btn btn-sm btn-primary" href="{{route('member_edit', ['id' => $member->id])}}">Edit</a>
-                        <a class="btn btn-sm btn-danger delete-button" href="">Delete</a>
+
+                        @if (Auth::user()->role == 'super-admin')
+
+
+                     <form action="{{route('member_destroy',['id' => $member->id])}}" method="POST">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input class="btn btn-sm btn-danger delete-button" type="submit" value="Delete">
+
+                        </form>
+                        @endif
                     </td>
+                    @endif
                 </tr>   
                 @endforeach
             </tbody>
