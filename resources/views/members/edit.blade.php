@@ -1,5 +1,22 @@
 @extends('layouts.app')
 
+@section('head')
+<style>
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-control {
+            margin-bottom: 15px; /* Adjust the spacing between inputs */
+        }
+        .btn {
+            margin-top: 10px; /* Space above buttons */
+        }
+        .row {
+            margin-bottom: 20px; /* Space between rows */
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container">
         @if ($errors->any())
